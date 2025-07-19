@@ -1,6 +1,6 @@
-MIT License
+MIT License with Attribution Requirement for Large-Scale Commercial Use
 
-Copyright (c) 2025 Michael Obubelebra Amachree
+Copyright (c) 2025 Michael Amachree
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -11,6 +11,22 @@ furnished to do so, subject to the following conditions:
 
 The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
+
+ADDITIONAL COMMERCIAL ATTRIBUTION REQUIREMENT:
+If you use this Software, in whole or in part, in any product, service, or 
+application that serves more than 100,000 users, you must:
+
+1. Provide clear attribution to Michael Amachree as the original creator
+2. Include a statement that your product uses the "Make It heavy" framework
+3. This attribution must be visible in one of the following locations:
+   - Product documentation
+   - About page/section
+   - Credits section
+   - Help/support documentation
+   - Or equivalent user-accessible location
+
+Example attribution: "Powered by Make It heavy framework by Michael Amachree"
+or "Uses Make It heavy multi-agent system created by Michael Amachree"
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
