@@ -107,3 +107,59 @@ This project was inspired by the original [Make It Heavy](https://github.com/Dor
 ## 📝 License
 
 MIT License with Commercial Attribution Requirement. See [LICENSE](LICENSE) file for full details.
+
+## How to Run
+
+The `make-it-heavy` script can be executed using Bun. Ensure you have followed the [Quick Start](#quick-start) instructions to set up your environment and install dependencies.
+
+To run the main orchestration script:
+
+```bash
+bun src/make-it-heavy.ts
+```
+
+To run a single agent:
+
+```bash
+bun src/main.ts
+```
+
+## Project Tools
+
+The `tools/` directory contains various tools that the agents can use. These tools are automatically discovered and loaded by the system. Each tool is designed to perform a specific function, extending the capabilities of the agents.
+
+The available tools include:
+
+- `base.tool.ts`: Base class for all tools.
+- `browse.tool.ts`: Tool for browsing web pages.
+- `calculator.tool.ts`: Tool for performing mathematical calculations.
+- `read_file.tool.ts`: Tool for reading file contents.
+- `search.tool.ts`: Tool for performing web searches.
+- `task_done.tool.ts`: Tool to signal task completion.
+- `write_file.tool.ts`: Tool for writing to files.
+
+## Adding New Tools
+
+You can extend the functionality of the `make-it-heavy` system by adding new tools. Follow these steps to create and integrate a new tool:
+
+1.  **Create a New Tool File**: In the `tools/` directory, create a new TypeScript file (e.g., `my_new_tool.tool.ts`).
+2.  **Define the Tool Class**: Your tool must extend the `Tool` class from `base.tool.ts` and implement the `ToolInterface`.
+
+    ```typescript
+    import { Tool, ToolInterface } from "./base.tool";
+
+    export class MyNewTool extends Tool implements ToolInterface {
+      name: string = "my_new_tool";
+      description: string = "A brief description of what your new tool does.";
+
+      async call(input: string): Promise<string> {
+        // Implement your tool's logic here
+        console.log(`MyNewTool called with input: ${input}`);
+        return `Result of MyNewTool for input: ${input}`;
+      }
+    }
+    ```
+
+3.  **Implement `call` Method**: The `call` method contains the core logic of your tool. It takes a string `input` and returns a `Promise<string>`.
+4.  **Automatic Discovery**: The system automatically discovers and loads all `.tool.ts` files in the `tools/` directory, so no further configuration is needed.
+5.  **Usage by Agents**: Once added, agents will be able to use your new tool by calling it by its `name` (e.g., `my_new_tool`). Ensure the description is clear so the agent knows when to use it.

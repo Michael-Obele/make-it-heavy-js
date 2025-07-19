@@ -8,10 +8,78 @@ import path from "path";
  * @returns The sanitized string.
  */
 function sanitizeName(name: string): string {
+  const stopWords = new Set([
+    "a",
+    "an",
+    "the",
+    "is",
+    "for",
+    "to",
+    "of",
+    "in",
+    "it",
+    "and",
+    "or",
+    "but",
+    "not",
+    "on",
+    "with",
+    "as",
+    "at",
+    "by",
+    "from",
+    "up",
+    "down",
+    "out",
+    "off",
+    "over",
+    "under",
+    "again",
+    "further",
+    "then",
+    "once",
+    "here",
+    "there",
+    "when",
+    "where",
+    "why",
+    "how",
+    "all",
+    "any",
+    "both",
+    "each",
+    "few",
+    "more",
+    "most",
+    "other",
+    "some",
+    "such",
+    "no",
+    "nor",
+    "only",
+    "own",
+    "same",
+    "so",
+    "than",
+    "too",
+    "very",
+    "s",
+    "t",
+    "can",
+    "will",
+    "just",
+    "don",
+    "should",
+    "now",
+  ]);
+
   return name
     .toLowerCase()
-    .replace(/\s+/g, "-") // Replace spaces with hyphens
-    .replace(/[^a-z0-9-_]/g, "") // Remove invalid characters
+    .split(/\s+/) // Split by spaces
+    .filter((word) => !stopWords.has(word) && word.length > 0) // Remove stop words and empty strings
+    .slice(0, 6) // Take the first 6 words
+    .join("-") // Join with hyphens
+    .replace(/[^a-z0-9-]/g, "") // Remove invalid characters (keep hyphens)
     .replace(/--+/g, "-") // Replace multiple hyphens with a single hyphen
     .replace(/^-+|-+$/g, ""); // Remove leading/trailing hyphens
 }

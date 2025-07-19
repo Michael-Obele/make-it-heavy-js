@@ -1,6 +1,35 @@
 import { runAgent } from "./agent";
 import config from "../config";
 
+export type AgentProgressStatus =
+  | "QUEUED"
+  | "PROCESSING"
+  | "COMPLETED"
+  | "FAILED";
+
+// Module-level state for agent progress
+const agentProgress: { [agentId: number]: AgentProgressStatus } = {};
+const agentResults: {
+  [agentId: number]: { status: string; response: string };
+} = {};
+
+export function updateAgentProgress(
+  agentId: number,
+  status: AgentProgressStatus,
+  result?: string
+): void {
+  agentProgress[agentId] = status;
+  if (result !== undefined) {
+    agentResults[agentId] = { status, response: result };
+  }
+}
+
+export function getProgressStatus(): {
+  [agentId: number]: AgentProgressStatus;
+} {
+  return { ...agentProgress };
+}
+
 async function decomposeTask(
   userInput: string,
   numAgents: number
@@ -63,19 +92,62 @@ async function aggregateResults(agentResults: any[]): Promise<string> {
 }
 
 export async function orchestrate(userInput: string): Promise<string> {
+  // Reset progress tracking for a new orchestration run
+  for (const key in agentProgress) {
+    delete agentProgress[key];
+  }
+  for (const key in agentResults) {
+    delete agentResults[key];
+  }
+
   const numAgents = config.orchestrator.parallel_agents;
   const subtasks = await decomposeTask(userInput, numAgents);
 
-  const agentPromises = subtasks.map((subtask, i) =>
-    runAgent(subtask, true)
-      .then((response) => ({ agent_id: i, status: "success", response }))
-      .catch((error) => ({
+  // Initialize progress tracking
+  for (let i = 0; i < numAgents; i++) {
+    updateAgentProgress(i, "QUEUED");
+  }
+
+  const agentPromises = subtasks.map((subtask, i) => {
+    return new Promise<{
+      agent_id: number;
+      status: string;
+      response: string;
+    }>(async (resolve) => {
+      updateAgentProgress(i, "PROCESSING");
+      try {
+        const response = await runAgent(subtask, true);
+        updateAgentProgress(i, "COMPLETED", response);
+        resolve({ agent_id: i, status: "success", response });
+      } catch (error) {
+        updateAgentProgress(i, "FAILED", (error as Error).message);
+        resolve({
+          agent_id: i,
+          status: "error",
+          response: (error as Error).message,
+        });
+      }
+    });
+  });
+
+  const allAgentResults = await Promise.allSettled(agentPromises);
+
+  const formattedResults = allAgentResults.map((result, i) => {
+    if (result.status === "fulfilled") {
+      return result.value;
+    } else {
+      // This case should ideally be caught by the individual promise's catch block,
+      // but it's here for completeness in case of unexpected rejections.
+      return {
         agent_id: i,
         status: "error",
-        response: (error as Error).message,
-      }))
-  );
+        response: (result.reason as Error).message,
+      };
+    }
+  });
 
-  const agentResults = await Promise.all(agentPromises);
-  return await aggregateResults(agentResults);
+  // Sort results by agent_id for consistent output
+  formattedResults.sort((a, b) => a.agent_id - b.agent_id);
+
+  return await aggregateResults(formattedResults);
 }
