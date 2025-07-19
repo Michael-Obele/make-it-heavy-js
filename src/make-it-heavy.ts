@@ -1,5 +1,6 @@
 import { orchestrate } from "./orchestrator";
 import readline from "readline";
+import { saveHeavyModeOutput } from "./utils/file-saver";
 
 const rl = readline.createInterface({
   input: process.stdin,
@@ -22,4 +23,9 @@ rl.on("line", async (input) => {
   console.log("=".repeat(80));
   console.log(result);
   console.log("=".repeat(80));
+  try {
+    await saveHeavyModeOutput(input, result);
+  } catch (error) {
+    console.error("Error saving heavy mode output:", error);
+  }
 });

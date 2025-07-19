@@ -2,6 +2,8 @@ export interface ToolParameter {
   type: string;
   description: string;
   default?: any;
+  // Allow 'enum' for string types, which is common in OpenAPI/JSON schema for tool parameters
+  enum?: string[];
 }
 
 export interface ToolParameters {
@@ -10,6 +12,8 @@ export interface ToolParameters {
     [key: string]: ToolParameter;
   };
   required: string[];
+  // Allow additional properties for more flexible schema definitions
+  [key: string]: any;
 }
 
 export interface Tool {

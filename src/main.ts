@@ -10,6 +10,9 @@ console.log("OpenRouter Agent with DuckDuckGo Search");
 console.log("Type 'quit', 'exit', or 'bye' to exit");
 console.log("-".repeat(50));
 
+rl.setPrompt("]> ");
+rl.prompt();
+
 rl.on("line", async (input) => {
   if (["quit", "exit", "bye"].includes(input.toLowerCase())) {
     rl.close();
@@ -19,4 +22,5 @@ rl.on("line", async (input) => {
   console.log("Agent: Thinking...");
   const response = await runAgent(input);
   console.log(`Agent: ${response}`);
+  rl.prompt(); // Display prompt again after response
 });
