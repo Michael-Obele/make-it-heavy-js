@@ -53,6 +53,12 @@ bun install
 OPENROUTER_API_KEY="YOUR_API_KEY"
 ```
 
+You can copy the example file:
+
+```bash
+cp .env.example .env
+```
+
 ## 🎯 Usage
 
 ### Single Agent Mode

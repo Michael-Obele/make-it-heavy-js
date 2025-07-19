@@ -3,7 +3,7 @@ import { z } from "zod";
 const configSchema = z.object({
   openrouter: z.object({
     api_key: z.string(),
-    base_url: z.string().url(),
+    base_url: z.url(),
     model: z.string(),
   }),
   system_prompt: z.string(),
@@ -26,8 +26,8 @@ const configSchema = z.object({
 const config = {
   openrouter: {
     api_key: process.env.OPENROUTER_API_KEY || "YOUR KEY",
-    base_url: "https://openrouter.ai/api/v1",
-    model: "moonshotai/kimi-k2",
+    base_url: process.env.URL || "https://openrouter.ai/api/v1",
+    model: process.env.MODEL || "moonshotai/kimi-k2",
   },
   system_prompt:
     "You are a helpful research assistant. When users ask questions that require current information or web search, use the search tool and all other tools available to find relevant information and provide comprehensive answers based on the results.\n\nIMPORTANT: When you have fully satisfied the user's request and provided a complete answer, you MUST call the mark_task_complete tool with a summary of what was accomplished and a final message for the user. This signals that the task is finished.",
