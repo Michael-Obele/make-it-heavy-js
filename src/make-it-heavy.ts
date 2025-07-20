@@ -1,4 +1,5 @@
 import { orchestrate, getProgressStatus } from "./orchestrator";
+import { runSimpleResearchWithDisplay } from "./simple-research";
 import readline from "readline";
 import { saveHeavyModeOutput } from "./utils/file-saver";
 import config from "../config";
@@ -9,6 +10,38 @@ import {
   startProgressMonitor,
 } from "./utils/enhanced-cli-display";
 import { logError, logInfo, statusIndicator } from "./utils/cli-styling";
+
+async function runDirectQuery(query: string) {
+  try {
+    // Use simple, reliable research mode
+    console.log("🔬 Using Reliable Research Mode");
+    const result = await runSimpleResearchWithDisplay(query);
+
+    // Save output
+    try {
+      await saveHeavyModeOutput(query, result);
+      logInfo("Results saved to output directory");
+    } catch (error) {
+      logError(`Failed to save results: ${(error as Error).message}`);
+    }
+
+    return result;
+  } catch (error) {
+    console.log();
+    logError(`Research failed: ${(error as Error).message}`);
+    console.log("🔄 Trying fallback orchestration...");
+
+    try {
+      // Fallback to original orchestration if simple mode fails
+      return await orchestrate(query);
+    } catch (fallbackError) {
+      logError(
+        `All research methods failed: ${(fallbackError as Error).message}`,
+      );
+      throw error;
+    }
+  }
+}
 
 async function startCLI() {
   const rl = readline.createInterface({
@@ -96,31 +129,15 @@ async function startCLI() {
     );
 
     try {
-      const result = await orchestrate(trimmedInput);
+      // Use simple, reliable research mode
+      console.log("🔬 Using Reliable Research Mode");
+      const result = await runSimpleResearchWithDisplay(trimmedInput);
       running = false;
 
       if (stopProgressMonitor) {
         stopProgressMonitor();
         stopProgressMonitor = null;
       }
-
-      // Calculate final statistics
-      const executionTime = startTime ? (Date.now() - startTime) / 1000 : 0;
-      const progressStatuses = Object.values(getProgressStatus());
-      const successfulAgents = progressStatuses.filter(
-        (s) => s === "COMPLETED",
-      ).length;
-      const failedAgents = progressStatuses.filter(
-        (s) => s === "FAILED",
-      ).length;
-
-      // Display enhanced final results
-      displayFinalResults(trimmedInput, result, {
-        executionTime,
-        agentsUsed: config.orchestrator.parallel_agents,
-        successfulAgents,
-        failedAgents,
-      });
 
       // Save output
       try {
@@ -137,7 +154,7 @@ async function startCLI() {
       }
 
       console.log();
-      logError(`Orchestration failed: ${(error as Error).message}`);
+      logError(`Research failed: ${(error as Error).message}`);
       console.log();
       logInfo(
         "Please check your configuration and try again, or type 'help' for assistance.",
@@ -213,4 +230,20 @@ function displayHelp(): void {
   console.log();
 }
 
-startCLI();
+// Check if command line arguments are provided
+const args = process.argv.slice(2);
+if (args.length > 0) {
+  // Run with command line argument
+  const query = args.join(" ");
+  runDirectQuery(query)
+    .then(() => {
+      process.exit(0);
+    })
+    .catch((error) => {
+      console.error("Error:", error.message);
+      process.exit(1);
+    });
+} else {
+  // Run in interactive mode
+  startCLI();
+}

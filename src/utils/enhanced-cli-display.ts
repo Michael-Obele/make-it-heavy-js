@@ -146,7 +146,7 @@ export function enhancedUpdateDisplay(
   progress: AgentProgressStatus[],
   numAgents: number,
   modelDisplay: string,
-  rl: readline.Interface,
+  rl: readline.Interface | null,
   options: EnhancedDisplayOptions = {},
 ): void {
   const capabilities = getTerminalCapabilities();
@@ -319,7 +319,7 @@ export function enhancedUpdateDisplay(
   }
 
   // Restore cursor position for readline
-  if (capabilities.isInteractive) {
+  if (capabilities.isInteractive && rl) {
     rl.prompt(true);
   }
 }
@@ -377,7 +377,7 @@ export function startProgressMonitor(
     numAgents: number;
     modelDisplay: string;
   },
-  rl: readline.Interface,
+  rl: readline.Interface | null,
   options: EnhancedDisplayOptions = {},
 ): () => void {
   const interval = setInterval(() => {
