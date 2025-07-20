@@ -27,7 +27,11 @@ A TypeScript framework to emulate **Grok heavy** functionality using a powerful 
 - **🛠️ Hot-Swappable Tools**: Automatically discovers and loads tools from the `tools/` directory
 - **🔄 Intelligent Synthesis**: Combines multiple agent perspectives into unified, comprehensive answers
 - **🎮 Single Agent Mode**: Run individual agents for simpler tasks with full tool access
-- **🔒 Type-Safe Configuration**: Uses a TypeScript configuration file with Zod validation to ensure a robust and maintainable setup.
+- **🔒 Type-Safe Configuration**: Uses a TypeScript configuration file with Zod validation to ensure a robust and maintainable setup
+- **🎨 Professional CLI**: Enhanced terminal interface with colors, spinners, progress bars, and interactive help
+- **📊 Real-time Progress**: Visual progress tracking for multi-agent operations with detailed status tables
+- **🌈 Environment Aware**: Graceful degradation in terminals without color support (respects NO_COLOR)
+- **📱 Responsive Design**: Adapts to different terminal sizes and capabilities automatically
 
 ## 🚀 Quick Start
 
@@ -61,21 +65,44 @@ cp .env.example .env
 
 ## 🎯 Usage
 
+### 🎨 Enhanced CLI Experience
+
+Both modes now feature a professional terminal interface with:
+- **Semantic colors** (green for success, red for errors, yellow for warnings, cyan for info)
+- **Interactive spinners** and real-time progress tracking
+- **Professional data tables** for displaying results and agent status  
+- **Comprehensive help system** with examples and usage guidance
+- **Graceful error handling** with actionable feedback
+
 ### Single Agent Mode
 
-Run a single intelligent agent with full tool access:
+Run a single intelligent agent with enhanced CLI and full tool access:
 
 ```bash
-bun src/main.ts
+bun run dev:single
+# or directly: bun src/main.ts
 ```
+
+**Features:**
+- Interactive spinner during analysis
+- Web search integration via DuckDuckGo
+- Comprehensive help system with examples
+- Professional result formatting
 
 ### Grok heavy Mode (Multi-Agent Orchestration)
 
 Emulate Grok heavy's deep analysis with parallel intelligent agents:
 
 ```bash
-bun src/make-it-heavy.ts
+bun run dev
+# or directly: bun src/make-it-heavy.ts
 ```
+
+**Features:**
+- Real-time progress tracking for all agents
+- Visual status tables with progress bars
+- Configuration display and validation
+- Enhanced result synthesis and display
 
 ## 🏗️ Architecture
 
