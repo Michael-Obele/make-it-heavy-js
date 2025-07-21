@@ -1,6 +1,8 @@
 import readline from "readline";
 import { TaskOrchestrator } from "./orchestrator-clean";
 import config from "../config";
+import fs from "fs/promises";
+import path from "path";
 
 export class OrchestratorCLI {
   private orchestrator: TaskOrchestrator;
@@ -136,6 +138,9 @@ export class OrchestratorCLI {
       console.log();
       console.log("=".repeat(80));
 
+      // Save the result to a file
+      await this.saveResultToFile(userInput, result);
+
       return result;
     } catch (error) {
       this.running = false;
@@ -149,10 +154,50 @@ export class OrchestratorCLI {
     }
   }
 
+  private sanitizeFilename(prompt: string): string {
+    return prompt
+      .toLowerCase()
+      .replace(/[^a-z0-9\s-]/g, "") // Remove invalid chars
+      .replace(/\s+/g, "_") // Replace spaces with _
+      .replace(/--+/g, "_") // Replace multiple _ with single _
+      .replace(/^-+/, "") // Trim - from start of text
+      .replace(/-+$/, ""); // Trim - from end of text
+  }
+
+  private getCurrentDateFormatted(): string {
+    const date = new Date();
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, "0");
+    const day = date.getDate().toString().padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  }
+
+  private async saveResultToFile(
+    prompt: string,
+    content: string
+  ): Promise<void> {
+    const outputDir = "output";
+    const dateDir = this.getCurrentDateFormatted();
+    const fullOutputDir = path.join(outputDir, dateDir);
+
+    try {
+      await fs.mkdir(fullOutputDir, { recursive: true });
+      let filename = this.sanitizeFilename(prompt);
+      if (!filename) {
+        filename = `result_${Date.now()}`; // Fallback for empty prompt
+      }
+      const filePath = path.join(fullOutputDir, `${filename}.md`);
+      await fs.writeFile(filePath, content);
+      console.log(`\nOutput saved to: ${filePath}`);
+    } catch (error) {
+      console.error(`Error saving output to file: ${(error as Error).message}`);
+    }
+  }
+
   public async interactiveMode(): Promise<void> {
     console.log("Multi-Agent Orchestrator");
     console.log(
-      `Configured for ${this.orchestrator.getNumAgents()} parallel agents`,
+      `Configured for ${this.orchestrator.getNumAgents()} parallel agents`
     );
     console.log("Type 'quit', 'exit', or 'bye' to exit");
     console.log("-".repeat(50));
@@ -166,7 +211,7 @@ export class OrchestratorCLI {
         console.log("❌ ERROR: OpenRouter API key not configured!");
         console.log("Make sure you have:");
         console.log(
-          "1. Set your OpenRouter API key as OPENROUTER_API_KEY environment variable, or",
+          "1. Set your OpenRouter API key as OPENROUTER_API_KEY environment variable, or"
         );
         console.log("2. Updated the api_key in config.ts");
         console.log("3. Get your API key from: https://openrouter.ai/keys");
@@ -257,7 +302,7 @@ function displayHelp(): void {
   console.log("💡 Tips:");
   console.log();
   console.log(
-    "  • Ask complex questions that benefit from multiple perspectives",
+    "  • Ask complex questions that benefit from multiple perspectives"
   );
   console.log("  • Be specific about what kind of analysis you need");
   console.log("  • The system works best with research and analytical tasks");
@@ -309,7 +354,7 @@ export async function main(): Promise<void> {
 
     console.log("Multi-Agent Orchestrator");
     console.log(
-      `Configured for ${cli["orchestrator"].getNumAgents()} parallel agents`,
+      `Configured for ${cli["orchestrator"].getNumAgents()} parallel agents`
     );
     console.log("-".repeat(50));
     console.log();

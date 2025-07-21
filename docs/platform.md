@@ -6,7 +6,7 @@ This document merges the contents and insights from **ENHANCED_CAPABILITIES.md**
 
 ## 🚀 Platform Overview
 
-**Make It Heavy JS** is an advanced AI task execution platform designed to transform any query into comprehensive, production-ready solutions. It leverages multi-agent orchestration and the full 200k+ token context window of modern language models to deliver deep research, complete project development, advanced analytics, and robust automation.
+**Make It Heavy JS** is a multi-agent research orchestrator designed to transform any query into comprehensive solutions. It leverages multi-agent orchestration and the full 200k+ token context window of modern language models to deliver deep research and robust automation.
 
 ---
 
@@ -22,56 +22,19 @@ This document merges the contents and insights from **ENHANCED_CAPABILITIES.md**
   - Automated knowledge gap detection
   - Expert-level synthesis
 
-### 2. Complete Development Platform
+---
 
-- **Supported Project Types:**
+### 5. Structured Output Saving
 
-  - Web Applications (React, Next.js, Vue, Angular)
-  - API Services (Express, FastAPI, GraphQL)
-  - Libraries & Packages (npm, PyPI)
-  - Mobile Apps (React Native, Flutter)
-  - ML Projects (TensorFlow, PyTorch, Scikit-learn)
-  - Data Pipelines (ETL, processing)
-
-- **Generated Artifacts:**
-  - Full project structure & configuration
-  - Production-ready code
-  - Testing suites
-  - CI/CD pipelines
-  - Docker containerization
-  - Documentation & guides
-  - Deployment automation
-
-### 3. Advanced Analytics Platform
-
-- **Capabilities:**
-  - Descriptive statistics, predictive modeling, ML, time series analysis
-  - Data visualization, business intelligence
-- **Supported Data Sources:**
-  - JSON, CSV, XML, TSV, APIs, databases, real-time streams, logs
-
-### 4. Multi-Language Code Execution
-
-- **Languages:**
-  - JavaScript/Node.js, TypeScript, Python, Bash/Shell, SQL, Rust, Go, Java, C++, C, PHP, Ruby
-- **Security & Performance:**
-  - Sandboxed execution, resource limits, vulnerability scanning, optimization analysis
+- **Organized Outputs:** The platform now automatically saves all generated outputs to markdown files in a structured directory format: `output/<YYYY-MM-DD>/<prompt_name>.md`. This ensures all results are easily traceable, reviewable, and organized for future reference.
 
 ---
 
 ## 🏗️ Architecture & Implementation
 
-### Intelligent Task Classification
-
-- **Automatic Query Analysis:**
-  - Classifies tasks as research, development, analysis, automation, etc.
-  - Assesses complexity, domain, required agent roles, and context requirements
-
 ### Specialized Agent Roles
 
-- **Agents:**
-  - Researcher, Analyst, Developer, Architect, Tester, Specialist, Validator, Synthesizer
-  - Extensible for custom roles
+- **Agents:** The platform leverages specialized agents for different tasks, such as research and analysis.
 
 ### Context Management System
 
@@ -79,7 +42,6 @@ This document merges the contents and insights from **ENHANCED_CAPABILITIES.md**
   - Progressive context building
   - Memory persistence across phases
   - Token optimization
-  - Knowledge graph mapping
 
 ### CLI Experience
 
@@ -89,12 +51,7 @@ This document merges the contents and insights from **ENHANCED_CAPABILITIES.md**
 
 ### Security & Safety
 
-- **Code Execution:**
-  - Sandboxed environments, resource/time limits, malicious pattern detection
-- **Data Processing:**
-  - Privacy compliance, sensitive data detection, secure file handling, encryption
-- **Research Integrity:**
-  - Source credibility, cross-validation, bias detection, fact-checking
+- The platform incorporates measures to ensure the security and integrity of operations, focusing on reliable data handling and research practices.
 
 ---
 
@@ -120,13 +77,6 @@ This document merges the contents and insights from **ENHANCED_CAPABILITIES.md**
 - Documentation and guides for contributors and users
 
 ---
-
-## 📈 Performance Metrics
-
-- **Context Utilization:** 85-95% token efficiency
-- **Information Density:** High-value content per token
-- **Quality:** Multi-source verification, production-ready code, expert-level insights
-- **Success Rate:** 95%+ task completion, high user satisfaction
 
 ---
 

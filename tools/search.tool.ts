@@ -33,15 +33,21 @@ export const searchWebTool: Tool = {
       const response = await fetch(duckDuckGoUrl, {
         headers: {
           "User-Agent":
-            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
         },
         signal: AbortSignal.timeout(30000), // 30 second timeout for the search page itself
       });
 
       if (!response.ok) {
-        throw new Error(
-          `HTTP error fetching search results! status: ${response.status}`
-        );
+        if (response.status === 403) {
+          throw new Error(
+            `HTTP 403 Forbidden: The server understood the request but refuses to authorize it. This might be due to IP blocking or bot detection.`
+          );
+        } else {
+          throw new Error(
+            `HTTP error fetching search results! status: ${response.status}`
+          );
+        }
       }
 
       const html = await response.text();

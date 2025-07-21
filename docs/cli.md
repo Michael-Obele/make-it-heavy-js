@@ -23,47 +23,39 @@ The Make It Heavy JS CLI provides a professional, interactive terminal experienc
 
 ## CLI Features
 
-- **Semantic Colors:**  
+- **Semantic Colors:**
   - Success (green), errors (red), warnings (yellow), info (cyan)
-- **Interactive Elements:**  
+- **Interactive Elements:**
   - Spinners, progress bars, status tables
-- **Data Visualization:**  
-  - Professional tables and formatted output
-- **Help System:**  
+- **Help System:**
   - Comprehensive guidance with examples
-- **Real-time Updates:**  
+- **Real-time Updates:**
   - Live progress tracking for complex operations
-- **Agent Status Display:**  
+- **Agent Status Display:**
   - Shows QUEUED, PROCESSING, COMPLETED, FAILED for each agent
-- **Multi-Agent Coordination:**  
+- **Multi-Agent Coordination:**
   - Parallel and sequential agent orchestration
-- **Fallback Modes:**  
-  - Simple research mode for robust operation
-- **Timeout Protection:**  
-  - Prevents agents from hanging
-- **Error Handling:**  
-  - Clear error messages and recovery options
 
 ---
 
 ## Styling Guide
 
-- **Color Usage:**  
+- **Color Usage:**
   - Use semantic colors for status and feedback.
   - Avoid excessive color; prioritize clarity.
-- **Progress Bars:**  
+- **Progress Bars:**
   - Show percentage, completed/total, and agent status.
   - Update in real-time as agents progress.
-- **Tables:**  
+- **Tables:**
   - Use for displaying agent status, results, and summaries.
   - Align columns for readability.
-- **Spinners & Loaders:**  
+- **Spinners & Loaders:**
   - Indicate background processing.
   - Replace with status or results when complete.
-- **Formatting:**  
+- **Formatting:**
   - Use bold for headings, monospace for code/commands.
   - Separate sections with clear dividers.
-- **Error & Warning Messages:**  
+- **Error & Warning Messages:**
   - Use red/yellow with clear, actionable text.
   - Display at the top or in context with affected agent/task.
 
@@ -71,20 +63,17 @@ The Make It Heavy JS CLI provides a professional, interactive terminal experienc
 
 ## Recent Improvements
 
-- **Progress Tracking:**  
-  - Fixed progress bar to show accurate completion and percentage.
+- **Progress Tracking:**
   - Agent statuses now update in real-time.
-- **Research Focus:**  
-  - Removed coding/development tools from CLI.
+- **Research Focus:**
   - Streamlined toolset for research tasks only.
-- **Reliability:**  
-  - Added fallback simple research mode.
-  - Timeout and error handling for agent orchestration.
-- **Output Formatting:**  
+- **Output Formatting:**
   - Improved clarity and professionalism of terminal output.
   - Enhanced status tables and progress bars.
-- **Task Classification:**  
+- **Task Classification:**
   - CLI now prioritizes research queries and displays relevant tools.
+- **Structured Output Saving:**
+  - The CLI now automatically saves all outputs to markdown files in a structured directory format: `output/<YYYY-MM-DD>/<prompt_name>.md`. This provides a clear and organized way to review past CLI executions and their generated content.
 
 ---
 
