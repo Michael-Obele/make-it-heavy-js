@@ -32,7 +32,8 @@ export const searchWebTool: Tool = {
       // Fetch the HTML from DuckDuckGo search results
       const response = await fetch(duckDuckGoUrl, {
         headers: {
-          "User-Agent": "Mozilla/5.0 (compatible; KiloCodeAgent/1.0)",
+          "User-Agent":
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
         },
         signal: AbortSignal.timeout(30000), // 30 second timeout for the search page itself
       });

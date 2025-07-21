@@ -1,32 +1,36 @@
-import { z } from "zod";
+import * as v from "valibot";
 
-const configSchema = z.object({
-  openrouter: z.object({
-    api_key: z.string(),
-    base_url: z.url(),
-    model: z.string(),
+const configSchema = v.object({
+  openrouter: v.object({
+    api_key: v.string(),
+    base_url: v.pipe(v.string(), v.url()),
+    model: v.string(),
   }),
-  system_prompt: z.string(),
-  agent: z.object({
-    max_iterations: z.number().int().positive(),
-    context_window: z.number().int().positive().optional(),
-    temperature: z.number().min(0).max(2).optional(),
+  system_prompt: v.string(),
+  agent: v.object({
+    max_iterations: v.pipe(v.number(), v.integer(), v.minValue(1)),
+    context_window: v.optional(v.pipe(v.number(), v.integer(), v.minValue(1))),
+    temperature: v.optional(v.pipe(v.number(), v.minValue(0), v.maxValue(2))),
   }),
-  orchestrator: z.object({
-    parallel_agents: z.number().int().positive(),
-    task_timeout: z.number().int().positive(),
-    aggregation_strategy: z.string(),
-    question_generation_prompt: z.string(),
-    synthesis_prompt: z.string(),
-    enhanced_mode: z.boolean().optional(),
-    deep_research_phases: z.number().int().min(3).max(6).optional(),
-    max_iterations_per_phase: z.number().int().positive().optional(),
-    context_preservation: z.boolean().optional(),
-    task_classification: z.boolean().optional(),
+  orchestrator: v.object({
+    parallel_agents: v.pipe(v.number(), v.integer(), v.minValue(1)),
+    task_timeout: v.pipe(v.number(), v.integer(), v.minValue(1)),
+    aggregation_strategy: v.string(),
+    question_generation_prompt: v.string(),
+    synthesis_prompt: v.string(),
+    enhanced_mode: v.optional(v.boolean()),
+    deep_research_phases: v.optional(
+      v.pipe(v.number(), v.integer(), v.minValue(3), v.maxValue(6)),
+    ),
+    max_iterations_per_phase: v.optional(
+      v.pipe(v.number(), v.integer(), v.minValue(1)),
+    ),
+    context_preservation: v.optional(v.boolean()),
+    task_classification: v.optional(v.boolean()),
   }),
-  search: z.object({
-    max_results: z.number().int().positive(),
-    user_agent: z.string(),
+  search: v.object({
+    max_results: v.pipe(v.number(), v.integer(), v.minValue(1)),
+    user_agent: v.string(),
   }),
 });
 
@@ -211,4 +215,4 @@ OUTPUT FORMAT: Deliver ONLY the comprehensive synthesized response. No meta-comm
   },
 };
 
-export default configSchema.parse(config);
+export default v.parse(configSchema, config);

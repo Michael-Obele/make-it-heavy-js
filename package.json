@@ -4,12 +4,10 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "demo": "bun run src/example-cli.ts",
-    "demo:simple": "bun run src/example-cli.ts --simple",
     "dev": "bun run src/make-it-heavy.ts",
-    "dev:single": "bun run src/main.ts",
-    "dev:legacy": "bun run src/integration-example.ts --simple",
-    "start": "bun run index.ts"
+    "start": "bun run src/make-it-heavy.ts",
+    "debug": "DEBUG=true bun run src/make-it-heavy.ts",
+    "help": "bun run src/make-it-heavy.ts --help"
   },
   "devDependencies": {
     "@types/bun": "latest",
@@ -19,15 +17,10 @@
     "typescript": "^5"
   },
   "dependencies": {
-    "@opentf/cli-pbar": "^0.7.2",
-    "boxen": "^8.0.1",
-    "cli-table3": "^0.6.5",
-    "duck-duck-scrape": "^2.2.7",
     "jsdom": "^26.1.0",
     "mathjs": "^14.5.3",
     "openai": "^5.10.1",
-    "ora": "^8.2.0",
-    "picocolors": "^1.1.1",
-    "zod": "^4.0.5"
+    "p-retry": "^6.2.1",
+    "valibot": "^1.1.0"
   }
 }
