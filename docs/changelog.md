@@ -6,34 +6,72 @@ This changelog tracks major updates, enhancements, and corrections made to the R
 
 ## 📅 Update Log
 
-### v2.0 — Major CLI & Documentation Overhaul
+### July 2025 — Configuration and Documentation Enhancements
 
 #### Overview
+
+This version focuses on enhancing the configuration schema, improving documentation organization, and providing example environment configurations.
+
+#### 🔄 Major Changes
+
+**1. Enhanced Configuration Schema**
+
+- Added optional parameters to the configuration schema for more flexible project setup.
+
+**2. Documentation Refinements**
+
+- Removed outdated documentation files to maintain clarity and accuracy.
+- Added instructions for running the project in the README.
+- Included an example environment configuration file (`.env.example`).
+- Updated `.gitignore` to include the `output` directory for the Heavy CLI.
+
+**3. Initial Project Setup**
+
+- Added an initial README for the Make It Heavy project.
+- Implemented a configuration schema with default values.
+- Updated the license to include attribution requirements.
+
+#### 🎯 Key Corrections
+
+- Ensured documentation reflects the latest configuration options.
+- Cleaned up redundant documentation files.
+
+---
+
+### July 2025 — Major CLI & Documentation Overhaul
+
+#### Overview
+
 The README.md was comprehensively updated to reflect significant CLI styling enhancements, architectural improvements, and documentation restructuring.
 
 #### 🔄 Major Changes
 
 **1. Enhanced Features Section**
+
 - Added CLI styling features: professional terminal interface, semantic colors, interactive elements.
 - Documented environment awareness: NO_COLOR support, graceful degradation, responsive design.
 - Clarified tool system: function-based approach vs class-based.
 
 **2. New Usage Documentation**
+
 - Expanded CLI Experience section: overview of visual improvements.
 - Updated script commands: reflects new package.json scripts (`dev`, `dev:single`, `demo`, etc.).
 - Added feature descriptions: detailed breakdown for each mode.
 
 **3. Architecture Updates**
+
 - Clarified tool system: updated to reflect function-based implementation.
 - Added implementation details: tool file structure and naming conventions.
 - Enhanced tool table: added implementation column showing actual file locations.
 
 **4. New Major Sections Added**
+
 - CLI Styling System: color system documentation, interactive elements, environment awareness.
 - Available Scripts: complete script reference, direct execution alternatives, dev/prod modes.
 - Adding New Tools: corrected implementation example, real code samples, tool discovery process.
 
 **5. Additional Documentation**
+
 - Dependencies section: library overview with bundle impact analysis.
 - Documentation references: links to comprehensive implementation guides.
 - Tool templates: reference implementations in tools directory.
@@ -41,10 +79,12 @@ The README.md was comprehensively updated to reflect significant CLI styling enh
 #### 🎯 Key Corrections
 
 **Tool Implementation**
+
 - Before: Class-based, incorrect references.
 - After: Function-based, real code examples, proper TypeScript interfaces.
 
 **Script Commands**
+
 - Before: Generic bun commands.
 - After: Specific npm scripts with enhanced CLI.
 
